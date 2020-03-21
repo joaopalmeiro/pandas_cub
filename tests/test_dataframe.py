@@ -28,20 +28,20 @@ class TestDataFrameCreation:
             pdc.DataFrame({'a': np.array([1]), 'b': 10})
 
         with pytest.raises(ValueError):
-            pdc.DataFrame({'a': np.array([1]), 
+            pdc.DataFrame({'a': np.array([1]),
                            'b': np.array([[1]])})
 
         # correct construction. no error
-        pdc.DataFrame({'a': np.array([1]), 
+        pdc.DataFrame({'a': np.array([1]),
                        'b': np.array([1])})
 
     def test_array_length(self):
         with pytest.raises(ValueError):
-            pdc.DataFrame({'a': np.array([1, 2]), 
+            pdc.DataFrame({'a': np.array([1, 2]),
                            'b': np.array([1])})
-        # correct construction. no error                           
-        pdc.DataFrame({'a': np.array([1, 2]), 
-                        'b': np.array([5, 10])})
+        # correct construction. no error
+        pdc.DataFrame({'a': np.array([1, 2]),
+                       'b': np.array([5, 10])})
 
     def test_unicode_to_object(self):
         a_object = a.astype('O')
@@ -86,7 +86,8 @@ class TestDataFrameCreation:
 
     def test_dtypes(self):
         cols = np.array(['a', 'b', 'c', 'd', 'e'], dtype='O')
-        dtypes = np.array(['string', 'string', 'float', 'bool', 'int'], dtype='O')
+        dtypes = np.array(
+            ['string', 'string', 'float', 'bool', 'int'], dtype='O')
 
         df_result = df.dtypes
         df_answer = pdc.DataFrame({'Column Name': cols,
@@ -110,8 +111,8 @@ class TestSelection:
         bool_arr = np.array([True, False, False])
         df_bool = pdc.DataFrame({'col': bool_arr})
         df_result = df[df_bool]
-        df_answer = pdc.DataFrame({'a': a[bool_arr], 'b': b[bool_arr], 
-                                   'c': c[bool_arr], 'd': d[bool_arr], 
+        df_answer = pdc.DataFrame({'a': a[bool_arr], 'b': b[bool_arr],
+                                   'c': c[bool_arr], 'd': d[bool_arr],
                                    'e': e[bool_arr]})
         assert_df_equals(df_result, df_answer)
 
@@ -191,7 +192,8 @@ class TestSelection:
         df_answer = pdc.DataFrame({'a': a[::2], 'b': b[::2], 'c': c[::2]})
         assert_df_equals(df[::2, :3], df_answer)
 
-        df_answer = pdc.DataFrame({'a': a[::2], 'b': b[::2], 'c': c[::2], 'd': d[::2], 'e': e[::2]})
+        df_answer = pdc.DataFrame(
+            {'a': a[::2], 'b': b[::2], 'c': c[::2], 'd': d[::2], 'e': e[::2]})
         assert_df_equals(df[::2, :], df_answer)
 
         with pytest.raises(TypeError):
@@ -204,13 +206,15 @@ class TestSelection:
         df_result = pdc.DataFrame({'a': a, 'b': b, 'c': c, 'd': d, 'e': e})
         f = np.array([1.5, 23, 4.11])
         df_result['f'] = f
-        df_answer = pdc.DataFrame({'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': f})
+        df_answer = pdc.DataFrame(
+            {'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': f})
         assert_df_equals(df_result, df_answer)
 
         df_result = pdc.DataFrame({'a': a, 'b': b, 'c': c, 'd': d, 'e': e})
         df_result['f'] = True
         f = np.repeat(True, 3)
-        df_answer = pdc.DataFrame({'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': f})
+        df_answer = pdc.DataFrame(
+            {'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': f})
         assert_df_equals(df_result, df_answer)
 
         df_result = pdc.DataFrame({'a': a, 'b': b, 'c': c, 'd': d, 'e': e})
@@ -221,7 +225,7 @@ class TestSelection:
 
         with pytest.raises(NotImplementedError):
             df[['a', 'b']] = 5
-        
+
         with pytest.raises(ValueError):
             df['a'] = np.random.rand(5, 5)
 
@@ -246,7 +250,7 @@ class TestSelection:
 
         df_result = df.tail(2)
         df_answer = pdc.DataFrame({'a': a[-2:], 'b': b[-2:], 'c': c[-2:],
-                                   'd':d[-2:], 'e': e[-2:]})
+                                   'd': d[-2:], 'e': e[-2:]})
         assert_df_equals(df_result, df_answer)
 
 
@@ -262,7 +266,6 @@ df2 = pdc.DataFrame({'a': a2, 'b': b2, 'c': c2})
 
 
 class TestAggregation:
-
 
     def test_min(self):
         df_result = df1.min()
@@ -555,7 +558,7 @@ class TestMoreMethods:
     def test_sort_values_desc(self):
         df_result = df6.sort_values('a', asc=False)
         a = np.array(['c', 'b', 'b', 'a', 'a'])
-        b = np.array([5.1, 6, 3.4, 1,2])
+        b = np.array([5.1, 6, 3.4, 1, 2])
         df_answer = pdc.DataFrame({'a': a, 'b': b})
         assert_df_equals(df_result, df_answer)
 
@@ -644,7 +647,8 @@ class TestGrouping:
         assert_df_equals(df_result, df_answer)
 
     def test_pivot_table_both(self):
-        df_result = df8.pivot_table(rows='a', columns='b', values='c', aggfunc='sum')
+        df_result = df8.pivot_table(
+            rows='a', columns='b', values='c', aggfunc='sum')
         df_answer = pdc.DataFrame({'a': np.array(['a', 'b'], dtype=object),
                                    'A': np.array([9., 8.]),
                                    'B': np.array([13., 6.])})
@@ -666,7 +670,8 @@ class TestStrings:
 
     def test_center(self):
         result = df_string.str.center('movie', 20, '-')
-        movie = np.array(['--field of dreams---', '-----star wars------'], dtype='O')
+        movie = np.array(
+            ['--field of dreams---', '-----star wars------'], dtype='O')
         answer = pdc.DataFrame({'movie': movie})
         assert_df_equals(result, answer)
 

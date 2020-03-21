@@ -190,7 +190,7 @@ class DataFrame:
         Parameters
         ----------
         n: int
-        
+
         Returns
         -------
         DataFrame
@@ -240,7 +240,7 @@ class DataFrame:
         Parameters
         ----------
         aggfunc: str of the aggregation function name in NumPy
-        
+
         Returns
         -------
         A DataFrame
@@ -310,7 +310,7 @@ class DataFrame:
         ----------
         columns: dict
             A dictionary mapping the old column name to the new column name
-        
+
         Returns
         -------
         A DataFrame
@@ -412,7 +412,7 @@ class DataFrame:
     def _non_agg(self, funcname, **kwargs):
         """
         Generic non-aggregation function
-    
+
         Parameters
         ----------
         funcname: numpy function
@@ -589,7 +589,7 @@ class DataFrame:
         agg_names = ['min', 'max', 'mean', 'median', 'sum', 'var',
                      'std', 'any', 'all', 'argmax', 'argmin']
         agg_doc = \
-        """
+            """
         Find the {} of each column
         
         Returns
